@@ -73,11 +73,11 @@ namespace MatrixPracticalWork
             }
             else
             {
-                Console.WriteLine("Помилка: Обернена матриця існує тільки для квадратних матриць (m = n).");
+                Console.WriteLine("Помилка: Обернена матриця існує тільки для квадратних матриць (m = n).\n");
             }
             Console.WriteLine(new string('-', 40));
 
-            // Завдання 2. Пошук рангу матриці A (Працює для будь-якої розмірності)
+            // Завдання 2. Пошук рангу матриці A
             Console.WriteLine("Завдання 2. Пошук рангу матриці A:");
             int rank = CalculateRank(matrixA);
             Console.WriteLine($"R = {rank}");
@@ -96,6 +96,7 @@ namespace MatrixPracticalWork
                 Console.WriteLine("Помилка: Розв'язання СЛАР через обернену матрицю можливе тільки для квадратних систем.");
             }
 
+            Console.WriteLine(new string('-', 40));
             Console.WriteLine("Програму завершено. Натисніть будь-яку клавішу...");
             Console.ReadKey();
         }
@@ -127,7 +128,7 @@ namespace MatrixPracticalWork
             return newMatrix;
         }
 
-        // Логіка для Завдання 1 (з виводом кроків)
+        // Логіка для Завдання 1
 
         static double[,] CalculateInverseMatrix(double[,] inputMatrix, bool showSteps = true)
         {
@@ -210,7 +211,7 @@ namespace MatrixPracticalWork
             for (int i = 0; i < n; i++)
             {
                 double sum = 0;
-                Console.WriteLine($"\nX[{i + 1}]:");
+                Console.WriteLine($"X[{i + 1}]:");
 
                 for (int j = 0; j < n; j++)
                 {
@@ -223,11 +224,10 @@ namespace MatrixPracticalWork
                 }
 
                 Console.WriteLine($" = {sum:F2}");
-                Console.WriteLine(new string('-', 40));
             }
         }
 
-        // --- Допоміжні методи ---
+        // Допоміжні методи
 
         static void PrintMatrix(string name, double[,] m)
         {
