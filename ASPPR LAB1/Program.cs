@@ -9,91 +9,109 @@ namespace MatrixPracticalWork
         {
             Console.OutputEncoding = Encoding.UTF8;
 
-            //// ---Вхідні дані(Варіант 5)-- -
-
-            //double[,] matrixA = {
-
-            //    { 2, 3, 2 },
-
-            //    { 1, -2, 1 },
-
-            //    { -1, 3, 5 }
-            //};
-
-            //double[] vectorB = { 1, 4, 1 };
-
-            //int n = matrixA.GetLength(0);
-
-            // 1. Введення матриці А
-
-            Console.Write("Введіть розмірність матриці А (m x n): ");
-            string[] sizeA = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            int m = int.Parse(sizeA[0]);
-            int n = int.Parse(sizeA[1]);
-
-            double[,] matrixA = new double[m, n];
-            for (int i = 0; i < m; i++)
+            try
             {
-                Console.Write($"{i + 1}р: ");
-                string[] rowValues = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                for (int j = 0; j < n; j++)
+                // 1. Введення матриці А
+                Console.Write("Введіть розмірність матриці А (m x n): ");
+                string[] sizeInput = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (sizeInput.Length < 2) throw new Exception("Потрібно ввести два числа (рядки та стовпці).");
+
+                int m = int.Parse(sizeInput[0]);
+                int n = int.Parse(sizeInput[1]);
+
+                double[,] matrixA = new double[m, n];
+                for (int i = 0; i < m; i++)
                 {
-                    matrixA[i, j] = double.Parse(rowValues[j]);
+                    Console.Write($"{i + 1}р: ");
+                    string[] rowValues = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (rowValues.Length < n) throw new Exception($"Недостатньо елементів у рядку. Очікувалося: {n}.");
+
+                    for (int j = 0; j < n; j++)
+                    {
+                        matrixA[i, j] = double.Parse(rowValues[j]);
+                    }
+                }
+
+                Console.WriteLine();
+
+                // 2. Вибір введення матриці B
+                double[] vectorB = null;
+                Console.Write($"Чи потрібно ввести матрицю B ({m} x 1)? (Y / N): ");
+                string choice = Console.ReadLine().Trim().ToUpper();
+
+                if (choice == "Y" || choice == "Т")
+                {
+                    vectorB = new double[m];
+                    for (int i = 0; i < m; i++)
+                    {
+                        Console.Write($"{i + 1}р: ");
+                        vectorB[i] = double.Parse(Console.ReadLine());
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Введення матриці B пропущено. Завдання 3 (СЛАР) не буде виконано.");
+                }
+
+                Console.WriteLine("\nВведена матриця А:");
+                PrintSimpleMatrix(matrixA);
+
+                if (vectorB != null)
+                {
+                    Console.WriteLine("\nВведена матриця B:");
+                    foreach (var v in vectorB) Console.WriteLine($"{v,10:F2}");
+                }
+                Console.WriteLine(new string('-', 40));
+
+                // --- Виконання завдань ---
+                bool isSquare = (m == n);
+
+                // Завдання 1. Обернена матриця
+                Console.WriteLine("Завдання 1. Знайти обернену матрицю C = A^-1:");
+                if (isSquare)
+                {
+                    double[,] inverseMatrix = CalculateInverseMatrix(matrixA);
+                    Console.WriteLine("Остаточна обернена матриця C = A^-1 =");
+                    PrintMatrix("", inverseMatrix);
+                }
+                else
+                {
+                    Console.WriteLine("Помилка: Обернена матриця існує тільки для квадратних матриць (m = n).\n");
+                }
+                Console.WriteLine(new string('-', 40));
+
+                // Завдання 2. Пошук рангу матриці A
+                Console.WriteLine("Завдання 2. Пошук рангу матриці A:");
+                int rank = CalculateRank(matrixA);
+                Console.WriteLine($"R = {rank}");
+                Console.WriteLine(new string('-', 40));
+
+                // Завдання 3. СЛАР
+                Console.WriteLine("Завдання 3. Розв'язати систему лінійних алгебраїчних рівнянь");
+                if (isSquare && vectorB != null)
+                {
+                    Console.WriteLine();
+                    double[,] inverseC = CalculateInverseMatrix(matrixA, false);
+                    SolveMethod1(matrixA, inverseC, vectorB);
+                }
+                else if (!isSquare)
+                {
+                    Console.WriteLine("Помилка: Розв'язання СЛАР через обернену матрицю можливе тільки для квадратних систем.");
+                }
+                else
+                {
+                    Console.WriteLine("Завдання 3. Пропущено, оскільки матриця B не була введена.");
                 }
             }
-
-            Console.WriteLine();
-
-            // 2. Введення матриці B
-
-            Console.WriteLine($"Введіть розмірність матриці B ({m} x 1)");
-            double[] vectorB = new double[m];
-            for (int i = 0; i < m; i++)
+            catch (FormatException)
             {
-                Console.Write($"{i + 1}р: ");
-                vectorB[i] = double.Parse(Console.ReadLine());
+                Console.WriteLine("\n[ПОМИЛКА]: Введено некоректний символ. Будь ласка, використовуйте лише числа.");
             }
-
-            Console.WriteLine("\nВведена матриця А:");
-            PrintSimpleMatrix(matrixA);
-
-            Console.WriteLine("\nВведена матриця B:");
-            foreach (var v in vectorB) Console.WriteLine($"{v,10:F2}");
-            Console.WriteLine(new string('-', 40));
-
-            bool isSquare = (m == n);
-
-            // Завдання 1. Обернена матриця
-            Console.WriteLine("Завдання 1. Знайти обернену матрицю C = A^-1:");
-            if (isSquare)
+            catch (Exception ex)
             {
-                double[,] inverseMatrix = CalculateInverseMatrix(matrixA);
-                Console.WriteLine("Остаточна обернена матриця C = A^-1 =");
-                PrintMatrix("", inverseMatrix);
-            }
-            else
-            {
-                Console.WriteLine("Помилка: Обернена матриця існує тільки для квадратних матриць (m = n).\n");
-            }
-            Console.WriteLine(new string('-', 40));
-
-            // Завдання 2. Пошук рангу матриці A
-            Console.WriteLine("Завдання 2. Пошук рангу матриці A:");
-            int rank = CalculateRank(matrixA);
-            Console.WriteLine($"R = {rank}");
-            Console.WriteLine(new string('-', 40));
-
-            // Завдання 3. СЛАР
-            Console.WriteLine("Завдання 3. Розв'язати систему лінійних алгебраїчних рівнянь");
-            if (isSquare)
-            {
-                Console.WriteLine();
-                double[,] inverseC = CalculateInverseMatrix(matrixA, false);
-                SolveMethod1(matrixA, inverseC, vectorB);
-            }
-            else
-            {
-                Console.WriteLine("Помилка: Розв'язання СЛАР через обернену матрицю можливе тільки для квадратних систем.");
+                Console.WriteLine($"\n[ПОМИЛКА]: {ex.Message}");
             }
 
             Console.WriteLine(new string('-', 40));
@@ -101,7 +119,7 @@ namespace MatrixPracticalWork
             Console.ReadKey();
         }
 
-        // Крок ЗЖВ
+        // --- Математичні методи (без змін) ---
 
         static double[,] JordanGaussStep(double[,] matrix, int pivotRow, int pivotCol)
         {
@@ -128,8 +146,6 @@ namespace MatrixPracticalWork
             return newMatrix;
         }
 
-        // Логіка для Завдання 1
-
         static double[,] CalculateInverseMatrix(double[,] inputMatrix, bool showSteps = true)
         {
             int n = inputMatrix.GetLength(0);
@@ -155,8 +171,6 @@ namespace MatrixPracticalWork
             }
             return currentMatrix;
         }
-
-        // Логіка для Завдання 2
 
         static int CalculateRank(double[,] inputMatrix)
         {
@@ -201,8 +215,6 @@ namespace MatrixPracticalWork
             return rank;
         }
 
-        // Логіка для Завдання 3
-
         static void SolveMethod1(double[,] originalA, double[,] inverseC, double[] vectorB)
         {
             int n = originalA.GetLength(0);
@@ -226,8 +238,6 @@ namespace MatrixPracticalWork
                 Console.WriteLine($" = {sum:F2}");
             }
         }
-
-        // Допоміжні методи
 
         static void PrintMatrix(string name, double[,] m)
         {
