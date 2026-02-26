@@ -119,7 +119,7 @@ namespace MatrixPracticalWork
             Console.ReadKey();
         }
 
-        // --- Математичні методи (без змін) ---
+        // Крок ЗЖВ для обчислення оберненої матриці
 
         static double[,] JordanGaussStep(double[,] matrix, int pivotRow, int pivotCol)
         {
@@ -146,6 +146,8 @@ namespace MatrixPracticalWork
             return newMatrix;
         }
 
+        // Обчислення оберненої матриці
+
         static double[,] CalculateInverseMatrix(double[,] inputMatrix, bool showSteps = true)
         {
             int n = inputMatrix.GetLength(0);
@@ -171,6 +173,8 @@ namespace MatrixPracticalWork
             }
             return currentMatrix;
         }
+
+        // Обчислення рангу матриці
 
         static int CalculateRank(double[,] inputMatrix)
         {
@@ -214,6 +218,8 @@ namespace MatrixPracticalWork
             }
             return rank;
         }
+
+        // Розв’язання СЛАР методом оберненої матриці
 
         static void SolveMethod1(double[,] originalA, double[,] inverseC, double[] vectorB)
         {
