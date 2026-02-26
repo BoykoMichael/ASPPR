@@ -9,6 +9,18 @@ namespace MatrixPracticalWork
         {
             Console.OutputEncoding = Encoding.UTF8;
 
+            //// ---Вхідні дані(Варіант 5)-- -
+
+            //matrixA = {
+            //    { 2, 3, 2 },
+
+            //    { 1, -2, 1 },
+
+            //    { -1, 3, 5 }
+            //};
+
+            //vectorB = { 1, 4, 1 };
+
             try
             {
                 // 1. Введення матриці А
