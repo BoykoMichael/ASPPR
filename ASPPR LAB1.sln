@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPPR LAB1", "ASPPR LAB1\AS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPPR LAB1B", "ASPPR LAB2\ASPPR LAB1B.csproj", "{97707FDA-54FC-44CB-B2C5-EF8BF4EDD8BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPPR LAB1C", "ASPPR LAB1C\ASPPR LAB1C.csproj", "{D8A32928-F7EB-4628-B187-DA3486B6FE94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{97707FDA-54FC-44CB-B2C5-EF8BF4EDD8BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97707FDA-54FC-44CB-B2C5-EF8BF4EDD8BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97707FDA-54FC-44CB-B2C5-EF8BF4EDD8BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8A32928-F7EB-4628-B187-DA3486B6FE94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8A32928-F7EB-4628-B187-DA3486B6FE94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8A32928-F7EB-4628-B187-DA3486B6FE94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8A32928-F7EB-4628-B187-DA3486B6FE94}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
